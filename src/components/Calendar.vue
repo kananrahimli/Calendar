@@ -258,6 +258,8 @@ body {
   align-self: center;
   color: #fc9b10;
   margin-top: -5px;
+
+  z-index: 1;
 }
 .task--danger {
   border-left-color: #fa607e;
@@ -267,6 +269,7 @@ body {
   background: rgba(253, 197, 208, 0.7);
   align-self: end;
   color: #f8254e;
+  z-index: 1;
 }
 .task--info {
   border-left-color: #4786ff;
@@ -276,6 +279,7 @@ body {
   background: rgba(218, 231, 255, 0.7);
   align-self: end;
   color: #0a5eff;
+  z-index: 1;
 }
 .task--primary {
   background: #4786ff;
@@ -286,6 +290,7 @@ body {
   align-self: end;
   color: #fff;
   box-shadow: 0 10px 14px rgba(71, 134, 255, 0.4);
+  z-index: 1;
 }
 .task__detail {
   position: absolute;
