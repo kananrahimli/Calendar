@@ -39,7 +39,7 @@ export default {
   data() {
     return {
      
-     
+
       months: [
         "January",
         "Febuary",
@@ -125,7 +125,7 @@ body {
     background-color: #0a5eff;
     cursor: pointer;
     transition: 0.3s;
-    z-index: 0;
+    opacity: 0.8;
 }
 .calendar {
   display: grid;
