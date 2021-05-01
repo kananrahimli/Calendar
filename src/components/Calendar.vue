@@ -119,6 +119,7 @@ body {
 }
 .active{
     background-color: #0a5eff;
+    opacity: 0.7;
 }
 
 .day:hover:not(.bg-primary,.day--disabled){
