@@ -1,25 +1,48 @@
 <template>
   <div class="calendar-container">
     <div class="calendar-header">
-      
-      <button class="btn btn-primary float-left" @click="beforeMonth"><i class="fas fa-chevron-left ml-3"></i></button>
-      <button class="btn btn-primary float-right " @click="afterMonth"><i class="fas fa-chevron-right mr-3"></i></button>
-      <p>{{currentDate.day}}/{{months[currentDate.month]}}/{{currentDate.year}}</p>
-      
-
+      <button class="btn btn-primary float-left" @click="beforeMonth">
+        <i class="fas fa-chevron-left ml-3"></i>
+      </button>
+      <button class="btn btn-primary float-right " @click="afterMonth">
+        <i class="fas fa-chevron-right mr-3"></i>
+      </button>
+      <p>
+        {{ currentDate.day }}/{{ months[currentDate.month] }}/{{
+          currentDate.year
+        }}
+      </p>
     </div>
     <div class="calendar">
       <span class="day-name">Mon</span><span class="day-name">Tue</span
       ><span class="day-name">Wed</span><span class="day-name">Thu</span
       ><span class="day-name">Fri</span><span class="day-name">Sat</span
       ><span class="day-name">Sun</span>
-      <div class="day day--disabled" v-for="day in firstMonthDay-1" :key="day">
-          {{(prevMonthDays+1)-firstMonthDay+day}}
+      <div
+        class="day day--disabled"
+        v-for="day in firstMonthDay - 1"
+        :key="day"
+      >
+        {{ prevMonthDays + 1 - firstMonthDay + day }}
       </div>
-      <div class="day" v-for="day in currentDateMonth" :key="day"  @click="currentDate.day=day" :class="{'active':day===currentDate.day}">{{day}}</div>
+      <div
+        class="day"
+        v-for="day in currentDateMonth"
+        :key="day"
+        @click="currentDate.day = day"
+        :class="{ active: day === currentDate.day }"
+      >
+        {{ day }}
+      </div>
 
-      <div class="day day--disabled" v-for="day in ((30-prevMonthDays+firstMonthDay))" :key="day">{{day}}</div>
-    
+      <div
+        class="day day--disabled"
+        v-for="day in firstMonthDay-1"
+        :key="day"
+      >
+        {{ day }}
+      </div>
+
       <section class="task task--warning">Projects</section>
       <section class="task task--danger">Design Sprint</section>
       <section class="task task--primary">
@@ -38,8 +61,6 @@
 export default {
   data() {
     return {
-     
-
       months: [
         "January",
         "Febuary",
@@ -54,58 +75,65 @@ export default {
         "November",
         "December",
       ],
-      currentDate:{
-          day:null,
-          month:null,
-          year:null
+      currentDate: {
+        day: null,
+        month: null,
+        year: null,
       },
-    }
+    };
   },
-  computed:{
-      currentDateMonth(){
-          return new Date(this.currentDate.year,this.currentDate.month+1,0).getDate()
-      },
-      prevMonthDays(){
-          let year=this.currentDate.month===0?this.currentDate.year-1:this.currentDate.year
-          let month=this.currentDate.month===0?11:this.currentDate.month;
-          return new Date(year,month,0).getDate()
-      },
-      firstMonthDay(){
-          let  firstDay=new Date(this.currentDate.year,this.currentDate.month,1).getDay();
-          if(firstDay===0) firstDay=7
-          return firstDay;
+  computed: {
+    currentDateMonth() {
+      return new Date(
+        this.currentDate.year,
+        this.currentDate.month + 1,
+        0
+      ).getDate();
+    },
+    prevMonthDays() {
+      let year =
+        this.currentDate.month === 0
+          ? this.currentDate.year - 1
+          : this.currentDate.year;
+      let month = this.currentDate.month === 0 ? 11 : this.currentDate.month;
+      return new Date(year, month, 0).getDate();
+    },
+    firstMonthDay() {
+      let firstDay = new Date(
+        this.currentDate.year,
+        this.currentDate.month,
+        1
+      ).getDay();
+      if (firstDay === 0) firstDay = 7;
+      return firstDay;
+    },
+  },
+  methods: {
+    getCurrentDate() {
+      let today = new Date();
+      this.currentDate.day = today.getDate();
+      this.currentDate.month = today.getMonth();
+      this.currentDate.year = today.getFullYear();
+    },
+
+    beforeMonth() {
+      this.currentDate.month -= 1;
+      if (this.currentDate.month < 0) {
+        this.currentDate.month = 11;
+        this.currentDate.year -= 1;
       }
+    },
+    afterMonth() {
+      this.currentDate.month += 1;
+      if (this.currentDate.month > 11) {
+        this.currentDate.month = 0;
+        this.currentDate.year += 1;
+      }
+    },
   },
-  methods:{
-      getCurrentDate(){
-          let today=new Date();
-          this.currentDate.day=today.getDate();
-          this.currentDate.month=today.getMonth();
-          this.currentDate.year=today.getFullYear();
-      },
-
-
-      beforeMonth(){
-          this.currentDate.month-=1;
-          if(this.currentDate.month<0){
-              this.currentDate.month=11;
-              this.currentDate.year-=1
-          }
-      },
-       afterMonth(){
-          this.currentDate.month+=1;
-          if(this.currentDate.month>11){
-              this.currentDate.month=0;
-              this.currentDate.year+=1
-          }
-      },
-     
-
-
+  created() {
+    this.getCurrentDate();
   },
-  created(){
-      this.getCurrentDate()
-  }
 };
 </script>
 
@@ -117,16 +145,16 @@ body {
   font-family: Montserrat, "sans-serif";
   color: #51565d;
 }
-.active{
-    background-color: #0a5eff;
-    opacity: 0.7;
+.active {
+  background-color: #0a5eff;
+  opacity: 0.7;
 }
 
-.day:hover:not(.bg-primary,.day--disabled){
-    background-color: #0a5eff;
-    cursor: pointer;
-    transition: 0.3s;
-    opacity: 0.8;
+.day:hover:not(.bg-primary, .day--disabled) {
+  background-color: #0a5eff;
+  cursor: pointer;
+  transition: 0.3s;
+  opacity: 0.8;
 }
 .calendar {
   display: grid;
@@ -240,7 +268,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f9f9fa' fill-opacity='1' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
   cursor: not-allowed;
 }
-
 
 .task {
   border-left-width: 3px;
